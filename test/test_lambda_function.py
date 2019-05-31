@@ -17,11 +17,10 @@ class TestLambdaFunction(unittest.TestCase):
         generated_statement = generated_policy_document["Statement"][0]
         generated_resource = generated_statement["Resource"][0]
 
+        self.assertEqual("open-endpoint", generated_policy["principalId"])
         self.assertEqual("2012-10-17", generated_policy_document["Version"])
-
         self.assertEqual("execute-api:Invoke", generated_statement["Action"])
         self.assertEqual("Allow", generated_statement["Effect"])
-
         self.assertEqual(method_arn, generated_resource)
 
     @staticmethod
