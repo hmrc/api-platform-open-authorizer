@@ -10,7 +10,7 @@ pipeline {
         sh("""virtualenv -p python3 venv
         . venv/bin/activate
         pip install -r requirements-dev.txt
-        nosetests -v --with-cover --cover-erase --cover-package=lambda_function --cover-package=api_request_details --cover-package=validate_authorization_token
+        nosetests -v --with-cover --cover-erase --cover-package=lambda_function --cover-package=api_request_details
         flake8 --ignore=E501 *.py
         deactivate""")
       }
@@ -22,14 +22,14 @@ pipeline {
     }
     stage('Generate sha256') {
       steps {
-        sh('openssl dgst -sha256 -binary api-platform-application-authorizer.zip | openssl enc -base64 > api-platform-application-authorizer.zip.base64sha256')
+        sh('openssl dgst -sha256 -binary api-platform-open-authorizer.zip | openssl enc -base64 > api-platform-open-authorizer.zip.base64sha256')
       }
     }
     stage('Upload to s3') {
       steps {
         script {
           git_id = sh(returnStdout: true, script: 'git describe --always').trim()
-          target_file = 'api-platform-application-authorizer.zip'
+          target_file = 'api-platform-open-authorizer.zip'
         }
         sh(
                 """
