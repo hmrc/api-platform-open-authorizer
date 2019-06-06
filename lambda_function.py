@@ -9,10 +9,12 @@ from api_request_details import ApiRequestDetails
 
 
 def lambda_handler(event, context):
-    open_endpoint_principal = "open-endpoint"
-    api_request_details = ApiRequestDetails(event['methodArn'])
+    method_arn = event['methodArn']
+    print(f'Request made to Open Endpoint with ARN: [{method_arn}]')
 
-    policy = AuthPolicy(open_endpoint_principal, api_request_details.aws_account_number)
+    api_request_details = ApiRequestDetails(method_arn)
+
+    policy = AuthPolicy('open-endpoint', api_request_details.aws_account_number)
     policy.restApiId = api_request_details.rest_api_id
     policy.region = api_request_details.aws_region
     policy.stage = api_request_details.stage
