@@ -10,7 +10,7 @@ from api_request_details import ApiRequestDetails
 
 def lambda_handler(event, context):
     method_arn = event['methodArn']
-    print(f'Request made to Open Endpoint with ARN: [{method_arn}]')
+    print('Request made to Open Endpoint with ARN: [{}]'.format(method_arn))
 
     api_request_details = ApiRequestDetails(method_arn)
 
